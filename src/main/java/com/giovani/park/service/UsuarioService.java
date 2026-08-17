@@ -67,7 +67,27 @@ public class UsuarioService {
 	}
 	
 	
+      //update
+		@Transactional
+	    public Usuario atualizar(Long id, Usuario dto) {
+	        Usuario usuario = usuarioRepository.findById(id).
+	        		orElseThrow(
+	        				() -> new RuntimeException("Usuario não encontrado") 
+	        				);
 
+	        // Atualiza os valores com os dados recebidos no DTO
+	        if (dto.getUsername() != null) {
+	            usuario.setUsername(dto.getUsername());
+	        }
+	        if (dto.getPassword() != null) {
+	            usuario.setPassword(dto.getPassword());
+	        }
+	        if (dto.getRole() != null) {
+	            usuario.setRole(dto.getRole());
+	        }
+
+	        return usuario;
+		}
 	
 	
 

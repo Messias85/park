@@ -1,6 +1,7 @@
 package com.giovani.park.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,6 +56,14 @@ public class UsuarioService {
 		Usuario usuario = buscarPorId(id);
 		usuario.setPassword(password);
 		return usuario;
+	}
+	
+
+	// pesquisa por todos
+		@Transactional(readOnly = true)
+	public List<Usuario> buscarPorTodos() {
+		// TODO Auto-generated method stub
+		return  usuarioRepository.findAll();
 	}
 	
 	

@@ -47,6 +47,16 @@ public class UsuarioService {
 				);
 	}
 	
+
+	@Transactional
+	public Usuario editarSenha(Long id, String password) {
+		// TODO Auto-generated method stub
+		
+		Usuario usuario = buscarPorId(id);
+		usuario.setPassword(password);
+		return usuario;
+	}
+	
 	
 
 	

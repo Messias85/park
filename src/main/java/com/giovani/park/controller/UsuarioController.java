@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.giovani.park.dto.UsuarioCreateDto;
+import com.giovani.park.dto.UsuarioResponseDto;
+import com.giovani.park.dto.mapper.UsuarioMapper;
 import com.giovani.park.model.Usuario;
 import com.giovani.park.service.UsuarioService;
 
@@ -31,20 +35,26 @@ public class UsuarioController {
 	
 	
 	@PostMapping
-	public ResponseEntity<Usuario> create(@RequestBody Usuario usuario){
-		
-		Usuario user = usuarioService.salvar(usuario);
-		
-		return ResponseEntity.status(HttpStatus.CREATED).body(user);
-		
+	public ResponseEntity<UsuarioResponseDto> create(@RequestBody UsuarioCreateDto dto) {
+	    System.out.println("=== TESTE DE RECEBIMENTO ===");
+	    System.out.println("DTO recebido é nulo? " + (dto == null));
+	    if (dto != null) {
+	        System.out.println("Username: " + dto.getUsername());
+	        System.out.println("Password: " + dto.getPassword());
+	    }
+	    System.out.println("============================");
+
+	    Usuario usuario = UsuarioMapper.toUsuario(dto);
+	    Usuario usuarioSalvo = usuarioService.salvar(usuario);
+	    return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioMapper.toDto(usuarioSalvo));
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Usuario> getById(@PathVariable Long id ){
+	public ResponseEntity<UsuarioResponseDto> getById(@PathVariable Long id ){
 		
 		Usuario user = usuarioService.buscarPorId(id);
 		
-		return ResponseEntity.ok(user);
+		return ResponseEntity.ok(UsuarioMapper.toDto(user));
 		
 	}
 	// UPDATE somente a senha

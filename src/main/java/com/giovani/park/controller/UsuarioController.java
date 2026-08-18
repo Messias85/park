@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.giovani.park.dto.UsuarioCreateDto;
 import com.giovani.park.dto.UsuarioResponseDto;
+import com.giovani.park.dto.UsuarioSenhaDto;
 import com.giovani.park.dto.mapper.UsuarioMapper;
 import com.giovani.park.model.Usuario;
 import com.giovani.park.service.UsuarioService;
@@ -60,11 +61,11 @@ public class UsuarioController {
 	// UPDATE somente a senha
 	
 	@PatchMapping("/{id}")
-	public ResponseEntity<Usuario> updatePassword(@PathVariable Long id,@RequestBody Usuario usuario ){
+	public ResponseEntity<Void> updatePassword(@PathVariable Long id,@RequestBody UsuarioSenhaDto usuario ){
 		
-		Usuario user = usuarioService.editarSenha(id, usuario.getPassword());
+		Usuario user = usuarioService.editarSenha(id, usuario.getSenhaAtual(),usuario.getNovaSenha(),usuario.getConfirmaSenha());
 		
-		return ResponseEntity.ok(user);
+		return ResponseEntity.noContent().build();
 		
 	}
 	

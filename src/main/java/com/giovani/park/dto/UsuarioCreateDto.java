@@ -9,8 +9,18 @@ public class UsuarioCreateDto {
 
   
     private String password;
+    
+    private String role;
 
-    // Getters e Setters OBRIGATÓRIOS para o ModelMapper funcionar
+    public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	// Getters e Setters OBRIGATÓRIOS para o ModelMapper funcionar
     public String getUsername() {
         return username;
     }

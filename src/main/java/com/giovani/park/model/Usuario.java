@@ -14,6 +14,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "usuarios")
@@ -29,6 +30,7 @@ public class Usuario  implements Serializable{
 	@Column(name = "username", nullable = false, unique = true, length = 100)
 	private String username;
 	
+	@NotBlank
 	@Column(name = "password" , nullable = false, length = 200)
 	private String password;
 	

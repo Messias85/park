@@ -22,6 +22,8 @@ import com.giovani.park.dto.mapper.UsuarioMapper;
 import com.giovani.park.model.Usuario;
 import com.giovani.park.service.UsuarioService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("api/v1/usuarios")
 public class UsuarioController {
@@ -36,7 +38,7 @@ public class UsuarioController {
 	
 	
 	@PostMapping
-	public ResponseEntity<UsuarioResponseDto> create(@RequestBody UsuarioCreateDto dto) {
+	public ResponseEntity<UsuarioResponseDto> create(@Valid @RequestBody UsuarioCreateDto dto) {
 	    System.out.println("=== TESTE DE RECEBIMENTO ===");
 	    System.out.println("DTO recebido é nulo? " + (dto == null));
 	    if (dto != null) {

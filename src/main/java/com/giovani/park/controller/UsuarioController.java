@@ -70,11 +70,11 @@ public class UsuarioController {
 	}
 	
 	@GetMapping("/listar")
-	public ResponseEntity<List<Usuario>> getAll(){
+	public ResponseEntity<List<UsuarioResponseDto>> getAll(){
 		
 		List<Usuario> user = usuarioService.buscarPorTodos();
 		
-		return ResponseEntity.ok(user);
+		return ResponseEntity.ok(UsuarioMapper.toListDto(user));
 		
 	}
 	

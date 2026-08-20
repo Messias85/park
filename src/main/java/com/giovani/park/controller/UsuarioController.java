@@ -63,7 +63,7 @@ public class UsuarioController {
 	// UPDATE somente a senha
 	
 	@PatchMapping("/{id}")
-	public ResponseEntity<Void> updatePassword(@PathVariable Long id,@RequestBody UsuarioSenhaDto usuario ){
+	public ResponseEntity<Void> updatePassword(@PathVariable Long id,@Valid @RequestBody UsuarioSenhaDto usuario ){
 		
 		Usuario user = usuarioService.editarSenha(id, usuario.getSenhaAtual(),usuario.getNovaSenha(),usuario.getConfirmaSenha());
 		

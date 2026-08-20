@@ -1,7 +1,13 @@
 package com.giovani.park.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class UsuarioSenhaDto {
 	
+	
+	@NotBlank(message = "A senha é obrigatória")
+    @Size(min = 6, max = 12, message = "A senha deve ter entre 6 e 12 caracteres")
 	private String senhaAtual;
 	private String novaSenha;
 	private String confirmaSenha;
@@ -13,6 +19,7 @@ public class UsuarioSenhaDto {
 
 
 	public UsuarioSenhaDto(String senhaAtual, String novaSenha, String confirmaSenha) {
+		
 		
 		this.senhaAtual = senhaAtual;
 		this.novaSenha = novaSenha;

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.giovani.park.exception.PasswordInvalidException;
+import com.giovani.park.exception.UsernameUniqueViolationException;
 import com.giovani.park.model.Usuario;
 import com.giovani.park.repository.UsuarioRepository;
 
@@ -27,7 +29,7 @@ public class UsuarioService {
 		// TODO Auto-generated method stub
 		
 		if(usuarioRepository.existsByUsername(usuario.getUsername())) {
-			throw new RuntimeException("Username '" + usuario.getUsername() + "' já está em uso.");
+			throw new UsernameUniqueViolationException(String.format("Username '%s' já está em uso.", usuario.getUsername()));
 		}
 		
 		// Preenche campos de auditoria e papel padrão caso não informados
@@ -35,8 +37,14 @@ public class UsuarioService {
         if (usuario.getRole() == null) {
             usuario.setRole(Usuario.Role.ROLE_CLIENTE);
         }
-
-        return usuarioRepository.save(usuario);
+        
+         try {
+           return usuarioRepository.save(usuario);
+         }catch(org.springframework.dao.DataIntegrityViolationException ex) {
+        	 throw new UsernameUniqueViolationException(
+        			    String.format("Username %s já cadastrado", usuario.getUsername())
+        			);
+         }
 		
 	}
 
@@ -54,13 +62,13 @@ public class UsuarioService {
 		// TODO Auto-generated method stub
 		
 		if(!novaSenha.equals(confirmaSenha)) {
-			throw new  RuntimeException("Nova senha não confere  com confirmacao de senha.");
+			throw new  PasswordInvalidException("Nova senha não confere  com confirmacao de senha.");
 			
 		}
 		
 		Usuario usuario = buscarPorId(id);
 		if(!usuario.getPassword().equals(senhaAtual)) {
-			throw new  RuntimeException("Sua senha não confere.");
+			throw new  PasswordInvalidException("Sua senha não confere.");
 			
 		}
 		
